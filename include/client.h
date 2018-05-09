@@ -3,3 +3,5 @@
 //
 
 #pragma once
+
+int client(int port);

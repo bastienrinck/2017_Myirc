@@ -5,3 +5,11 @@
 ** Created by rectoria
 */
 #include "client.h"
+
+int client(int port)
+{
+	int ret = 0;
+
+
+	return (ret);
+}
