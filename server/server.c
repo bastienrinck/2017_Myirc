@@ -5,4 +5,4 @@
 ** Created by rectoria
 */
 
-#include "../include/server.h"
+#include "server.h"
