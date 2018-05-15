@@ -1,6 +1,9 @@
-//
-// Created by rectoria on 5/7/18.
-//
+/*
+** EPITECH PROJECT, 2021
+** PSU_myirc_2017
+** File description:
+** Created by rectoria
+*/
 
 #pragma once
 
