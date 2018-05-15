@@ -12,7 +12,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1768cf1c-2da7-46d9-a95c-e656041f261b" name="Default" comment="" />
+    <list default="true" id="1768cf1c-2da7-46d9-a95c-e656041f261b" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/client/Gui/Gui/mainwindow.cpp" afterPath="$PROJECT_DIR$/client/Gui/Gui/mainwindow.cpp" />
+      <change beforePath="$PROJECT_DIR$/client/Gui/build-Gui-Desktop-Debug/Gui" afterPath="$PROJECT_DIR$/client/Gui/build-Gui-Desktop-Debug/Gui" />
+      <change beforePath="$PROJECT_DIR$/client/Gui/build-Gui-Desktop-Debug/mainwindow.o" afterPath="$PROJECT_DIR$/client/Gui/build-Gui-Desktop-Debug/mainwindow.o" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -229,12 +233,12 @@
       <workItem from="1525950674897" duration="211000" />
       <workItem from="1525950928223" duration="210000" />
       <workItem from="1526026875314" duration="3021000" />
-      <workItem from="1526282854879" duration="607000" />
+      <workItem from="1526282854879" duration="1948000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13326000" />
+    <option name="totallyTimeSpent" value="14667000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

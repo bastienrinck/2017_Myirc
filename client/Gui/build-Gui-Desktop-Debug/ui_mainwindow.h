@@ -13,6 +13,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDateEdit>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
@@ -32,6 +33,8 @@ public:
     QPushButton *btnSend;
     QLineEdit *lineMessage;
     QTextEdit *textEdit;
+    QTextEdit *clientEdit;
+    QDateEdit *dateEdit;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -40,22 +43,28 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(660, 432);
+        MainWindow->resize(1059, 610);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         btnSend = new QPushButton(centralWidget);
         btnSend->setObjectName(QString::fromUtf8("btnSend"));
-        btnSend->setGeometry(QRect(550, 330, 87, 29));
+        btnSend->setGeometry(QRect(880, 450, 87, 29));
         lineMessage = new QLineEdit(centralWidget);
         lineMessage->setObjectName(QString::fromUtf8("lineMessage"));
-        lineMessage->setGeometry(QRect(30, 320, 501, 29));
+        lineMessage->setGeometry(QRect(330, 450, 501, 29));
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(40, 20, 551, 281));
+        textEdit->setGeometry(QRect(330, 80, 671, 341));
+        clientEdit = new QTextEdit(centralWidget);
+        clientEdit->setObjectName(QString::fromUtf8("clientEdit"));
+        clientEdit->setGeometry(QRect(40, 90, 191, 381));
+        dateEdit = new QDateEdit(centralWidget);
+        dateEdit->setObjectName(QString::fromUtf8("dateEdit"));
+        dateEdit->setGeometry(QRect(80, 20, 110, 26));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 660, 23));
+        menuBar->setGeometry(QRect(0, 0, 1059, 22));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
