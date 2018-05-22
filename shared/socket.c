@@ -6,7 +6,7 @@
 */
 
 #include <unistd.h>
-#include "socket.h"
+#include "server.h"
 
 bool create_tcp_socket(int *fd, int protocol)
 {
