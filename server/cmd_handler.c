@@ -12,7 +12,8 @@
 
 static ptrfct_tuple_t fcmd[] = {{"PASS", &cmd_pass}, {"NICK", &cmd_nick},
 	{"USER", &cmd_user}, {"JOIN", &cmd_join}, {"LIST", &cmd_list},
-	{"PART", &cmd_part}, {"QUIT", &cmd_quit}, {"NAMES", &cmd_names}, {"PRIVMSG", &cmd_privmsg}};
+	{"PART", &cmd_part}, {"QUIT", &cmd_quit}, {"NAMES", &cmd_names},
+	{"PRIVMSG", &cmd_privmsg}, {"PING", &cmd_ping}};
 
 void send_cmd(server_t *srv, size_t k)
 {
@@ -34,7 +35,7 @@ void proceed_cmd(server_t *srv, size_t k)
 	printf("[%s] %s\n", tmp->sck.ip, tmp->cmd.cmd);
 	parse_cmd(&tmp->cmd);
 	for (int i = 0; i < CMD_NBR; ++i)
-		if (!strcmp(fcmd[i].cmd, tmp->cmd.name)) {
+		if (!strcasecmp(fcmd[i].cmd, tmp->cmd.name)) {
 			fcmd[i].func(srv, tmp);
 			break;
 		} else if (i + 1 == CMD_NBR)

@@ -11,6 +11,7 @@
 #include <netinet/in.h>
 
 #define VALID_SOCKET(sck) ((sck) != -1)
+#define SRV_NAME "localhost"
 
 typedef struct socket_s {
 	int fd;
@@ -44,3 +45,4 @@ bool create_tcp_socket(int *, int);
  * tools.c
  */
 bool print_errno(const char *, int, const char *);
+char *gen_rpl(const char *, ...);
