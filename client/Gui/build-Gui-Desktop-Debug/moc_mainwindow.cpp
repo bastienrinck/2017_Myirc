@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,12 +31,25 @@ static const uint qt_meta_data_MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
+      26,   11,   11,   11, 0x08,
+      39,   11,   11,   11, 0x08,
+      53,   11,   11,   11, 0x08,
+      64,   11,   11,   11, 0x08,
+      75,   11,   11,   11, 0x08,
+      86,   11,   11,   11, 0x08,
+      98,   11,   11,   11, 0x08,
+     109,   11,   11,   11, 0x08,
+     121,   11,   11,   11, 0x08,
+     131,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0sendMessage()\0"
+    "MainWindow\0\0sendMessage()\0proceedCmd()\0"
+    "funcConnect()\0funcQuit()\0funcJoin()\0"
+    "funcNick()\0funcUsers()\0funcPart()\0"
+    "funcNames()\0funcMsg()\0funcFile()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,6 +59,16 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
         case 0: _t->sendMessage(); break;
+        case 1: _t->proceedCmd(); break;
+        case 2: _t->funcConnect(); break;
+        case 3: _t->funcQuit(); break;
+        case 4: _t->funcJoin(); break;
+        case 5: _t->funcNick(); break;
+        case 6: _t->funcUsers(); break;
+        case 7: _t->funcPart(); break;
+        case 8: _t->funcNames(); break;
+        case 9: _t->funcMsg(); break;
+        case 10: _t->funcFile(); break;
         default: ;
         }
     }
@@ -84,9 +107,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 11;
     }
     return _id;
 }

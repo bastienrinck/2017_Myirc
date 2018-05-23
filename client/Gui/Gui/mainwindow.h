@@ -1,8 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "socketmanager.h"
+#include <functional>
 #include <QMainWindow>
 #include <QDebug>
+#include <QVector>
 
 namespace Ui {
 class MainWindow;
@@ -18,9 +21,23 @@ public:
 
 private slots:
      void sendMessage();
+     void proceedCmd();
+     void funcConnect();
+     void funcQuit();
+     void funcJoin();
+     void funcNick();
+     void funcUsers();
+     void funcPart();
+     void funcNames();
+     void funcMsg();
+     void funcFile();
 
 private:
-    Ui::MainWindow *ui;
+
+     size_t _serverSocket;
+     QMap<QString, std::function<void()>> _ptrs;
+     Ui::MainWindow *ui;
+     Ui::socketManager _socket;
 };
 
 #endif // MAINWINDOW_H
