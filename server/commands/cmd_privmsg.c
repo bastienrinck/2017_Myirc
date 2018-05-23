@@ -39,7 +39,7 @@ void msg_channel(server_t *srv, client_t *client)
 			str = malloc(2048 + strlen(client->cmd.param[1]));
 			sprintf(str, ":%s!%s@localhost PRIVMSG %s :%s",
 				client->nick, client->user,
-				tmp->client[i]->nick, client->cmd.param[1]);
+				tmp->name, client->cmd.param[1]);
 			add_pending(tmp->client[i], str);
 
 		}

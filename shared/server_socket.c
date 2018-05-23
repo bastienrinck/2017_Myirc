@@ -54,7 +54,14 @@ bool create_server_socket(socket_t *sck)
 
 bool server_accept(socket_t *sck, socket_t *client)
 {
+	char *temp;
+
 	client->fd = accept(sck->fd, &client->s_in, &client->size);
+	if (getsockname(client->fd, &client->s_in, &client->size))
+		return (print_errno(__func__, __LINE__, __FILE__));
+	temp = inet_ntoa(((struct sockaddr_in *)&client->s_in)->sin_addr);
+	memset(client->ip, 0, INET_ADDRSTRLEN);
+	memcpy(client->ip, temp, INET_ADDRSTRLEN);
 	if (!VALID_SOCKET(client->fd))
 		return (VALID_SOCKET(client->fd));
 }

@@ -9,19 +9,13 @@
 #include <string.h>
 #include "server.h"
 
-void print_channel(channel_t *channel)
-{
-	for (size_t i = 0; i < channel->amount; ++i)
-		printf("[%zu] %s\n", i, channel->client[i]->nick);
-	printf("\n");
-}
-
 void notify_channel(channel_t *channel, client_t *client)
 {
 	char *str = malloc(2048);
 
-	sprintf(str, ":%s!%s@localhost JOIN %s", client->nick, client->user,
-		channel->name);
+	//FIXME
+	sprintf(str, ":%s!~%s@%s JOIN :%s\r\n", client->nick, client->user,
+		client->sck.ip, channel->name);
 	for (size_t i = 0; i < channel->amount; ++i)
 		add_pending(channel->client[i], strdup(str));
 	free(str);
@@ -29,10 +23,8 @@ void notify_channel(channel_t *channel, client_t *client)
 
 void send_topic(channel_t *channel, client_t *client)
 {
-	char *str = malloc(2048);
-
-	sprintf(str, ":localhost 332 %s %s: Just a basic channel", client->user,
-		channel->name);
+	add_pending(client, gen_rpl(RPL_TOPIC, client->user, channel->name,
+		channel->topic));
 }
 
 void join_new_channel(server_t *srv, client_t *client, char *name)
@@ -43,6 +35,7 @@ void join_new_channel(server_t *srv, client_t *client, char *name)
 	ptr = malloc(sizeof(channel_t));
 	memset(ptr, 0, sizeof(channel_t));
 	memcpy(ptr->name, name, strlen(name) % CHANNEL_LENGTH);
+	memmove(ptr->topic, "Just a basic channel.", 21);
 	for (; tmp && tmp->next; tmp = tmp->next);
 	srv->channel = (srv->channel) ? srv->channel : ptr;
 	ptr->next = 0;
@@ -55,7 +48,6 @@ void join_new_channel(server_t *srv, client_t *client, char *name)
 	notify_channel(ptr, client);
 	send_topic(ptr, client);
 	list_users(client, ptr);
-	print_channel(ptr);
 }
 
 void join_existing_channel(client_t *client, channel_t *channel)
@@ -67,7 +59,6 @@ void join_existing_channel(client_t *client, channel_t *channel)
 	notify_channel(channel, client);
 	send_topic(channel, client);
 	list_users(client, channel);
-	print_channel(channel);
 }
 
 void join_channel(server_t *srv, client_t *client, char *name)
@@ -83,7 +74,15 @@ void join_channel(server_t *srv, client_t *client, char *name)
 
 void cmd_join(server_t *srv, client_t *client)
 {
-	if (client->cmd.psize == 1) {
+	if (!client->logged)
+		return;
+	if (client->cmd.psize == 1 && (client->cmd.param[0][0] == '#' ||
+		client->cmd.param[0][0] == '$'))
 		join_channel(srv, client, client->cmd.param[0]);
-	}
+	else if (client->cmd.psize == 1)
+		add_pending(client,
+			gen_rpl(ERR_NOSUCHCHANNEL, TRANSLATE_NICK(client)));
+	else
+		add_pending(client,
+			gen_rpl(ERR_NEEDMOREPARAMS, TRANSLATE_NICK(client)));
 }

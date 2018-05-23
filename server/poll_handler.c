@@ -27,7 +27,8 @@ void *build_pollfd(server_t *srv)
 	srv->pollfd = calloc(srv->size, sizeof(struct pollfd));
 	for (size_t i = 0; i < srv->size; ++i) {
 		srv->pollfd[i].fd = tmp->sck.fd;
-		srv->pollfd[i].events = (short)(tmp->pending ? POLLOUT : POLLIN);
+		srv->pollfd[i].events = (short)(tmp->pending ? POLLOUT :
+			POLLIN);
 		tmp = tmp->next;
 	}
 }
@@ -39,16 +40,15 @@ void apply_revent(server_t *srv)
 			inc_accept(srv);
 			continue;
 		}
-		if (srv->pollfd[k].revents & POLLIN)
-			proceed_cmd(srv, k);
 		if (srv->pollfd[k].revents & POLLOUT)
 			send_cmd(srv, k);
+		if (srv->pollfd[k].revents & POLLIN)
+			proceed_cmd(srv, k);
 	}
 }
 
 bool proceed_poll(server_t *srv, client_t *client)
 {
-	printf("Processing\n");
 	srv->list = client;
 	build_pollfd(srv);
 	srv->nevent = poll(srv->pollfd, srv->size, -1);
