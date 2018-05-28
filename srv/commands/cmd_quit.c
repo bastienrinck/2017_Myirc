@@ -18,7 +18,8 @@ static void display_quitmsg(client_t *client)
 	if (client->cmd.psize)
 		reason = str_append(
 			"ERROR :Closing Link: %s[~%s@%s] (\"%s\")\r\n",
-			client->nick, client->user, client->sck.ip, client->cmd.param[0]);
+			client->nick, client->user, client->sck.ip,
+			client->cmd.param[0]);
 	else
 		reason = str_append(
 			"ERROR :Closing Link: %s[~%s@%s] (\"\")\r\n",
@@ -36,10 +37,12 @@ void cmd_quit(server_t *srv, client_t *client)
 		client->prev->next = client->next;
 	if (client->next)
 		client->next->prev = client->prev;
-	for (channel_t *tmp = srv->channel; tmp;) {
-		save = tmp->next;
-		leave_channel(srv, client, tmp);
-		tmp = save;
+	if (srv) {
+		for (channel_t *tmp = srv->channel; tmp;) {
+			save = tmp->next;
+			leave_channel(srv, client, tmp);
+			tmp = save;
+		}
 	}
 	close(client->sck.fd);
 }

@@ -1,6 +1,6 @@
 NAME	= server
 
-CC	= gcc
+CC	= gcc -g
 
 RM	= rm -f
 

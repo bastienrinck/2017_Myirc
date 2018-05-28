@@ -34,4 +34,5 @@ void cmd_nick(server_t *srv, client_t *client)
 		}
 	}
 	add_pending(client, gen_rpl(msg, TRANSLATE_NICK(client)));
+	//TODO NICK propag et valid
 }

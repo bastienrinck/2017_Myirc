@@ -39,9 +39,9 @@ void apply_revent(server_t *srv)
 			inc_accept(srv);
 			continue;
 		}
-		proceed_cmd(srv, k, (bool)(srv->pollfd[k].revents & POLLIN));
 		if (srv->pollfd[k].revents & POLLOUT)
 			send_cmd(srv, k);
+		proceed_cmd(srv, k, (bool)(srv->pollfd[k].revents & POLLIN));
 	}
 }
 
