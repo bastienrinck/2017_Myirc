@@ -37,12 +37,10 @@ void cmd_quit(server_t *srv, client_t *client)
 		client->prev->next = client->next;
 	if (client->next)
 		client->next->prev = client->prev;
-	if (srv) {
-		for (channel_t *tmp = srv->channel; tmp;) {
-			save = tmp->next;
-			leave_channel(srv, client, tmp);
-			tmp = save;
-		}
+	for (channel_t *tmp = srv->channel; tmp;) {
+		save = tmp->next;
+		leave_channel(srv, client, tmp);
+		tmp = save;
 	}
 	close(client->sck.fd);
 }

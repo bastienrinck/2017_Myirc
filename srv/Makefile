@@ -1,6 +1,6 @@
 NAME	= server
 
-CC	= gcc -g
+CC	= gcc -g -D_GNU_SOURCE
 
 RM	= rm -f
 

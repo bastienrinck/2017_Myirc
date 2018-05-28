@@ -48,7 +48,6 @@ ssize_t socket_send(client_t *client)
 	if (!client->pending)
 		return (0);
 	len = strlen(client->pending->res);
-	printf("Sending [%s]\n", tmp->res);
 	send(client->sck.fd, client->pending->res, len, 0);
 	client->pending = client->pending->next;
 	free(tmp->res);

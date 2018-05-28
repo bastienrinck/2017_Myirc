@@ -11,14 +11,10 @@
 
 void notify_channel(channel_t *channel, client_t *client)
 {
-	char *str = malloc(2048);
-
-	//FIXME
-	sprintf(str, ":%s!~%s@%s JOIN :%s\r\n", client->nick, client->user,
-		client->sck.ip, channel->name);
 	for (size_t i = 0; i < channel->amount; ++i)
-		add_pending(channel->client[i], strdup(str));
-	free(str);
+		add_pending(channel->client[i],
+			str_append(":%s!~%s@%s JOIN :%s\r\n", client->nick,
+				client->user, client->sck.ip, channel->name));
 }
 
 void send_topic(channel_t *channel, client_t *client)

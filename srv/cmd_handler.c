@@ -56,7 +56,7 @@ void proceed_cmd(server_t *srv, size_t k, bool recv)
 
 	for (size_t i = 0; ++i < k + 1; tmp = tmp->next);
 	if (recv && !socket_recv(tmp)) {
-		cmd_quit(NULL, tmp);
+		cmd_quit(srv, tmp);
 		return;
 	}
 	while (tmp && retrieve_cmd(tmp)) {
