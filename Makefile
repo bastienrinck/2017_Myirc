@@ -15,19 +15,20 @@ RM	= rm -f
 
 all: $(NAME)
 
+$(NAME): client server
+
 server:
 	$(MAKE) -C srv && mv srv/server .
 
 client:
-	echo "client pas encore fait"
-
-$(NAME): server client
+	$(MAKE) -C cli/Gui && mv cli/Gui/Gui ./$(CLI)
 
 clean:
 	$(MAKE) -C srv clean
+	$(MAKE) -C cli/Gui clean
 
 fclean: clean
-	$(RM) $(SRV)
+	$(RM) $(SRV) $(CLI)
 
 re: fclean all
 
