@@ -6,7 +6,6 @@
 */
 
 #include <string.h>
-#include <malloc.h>
 #include "server.h"
 
 void msg_user(server_t *srv, client_t *client)
@@ -47,5 +46,7 @@ void cmd_privmsg(server_t *srv, client_t *client)
 			msg_user(srv, client);
 		else
 			msg_channel(srv, client);
-	}
+	} else
+		add_pending(client,
+			gen_rpl(ERR_NEEDMOREPARAMS, TRANSLATE_NICK(client)));
 }

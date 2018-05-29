@@ -34,14 +34,14 @@ void leave_channel(server_t *srv, client_t *client, channel_t *channel)
 		return;
 	for (size_t k = 0; k < channel->amount; ++k)
 		add_pending(channel->client[k],
-			str_append(CHAN_QUIT, client->nick, client->user,
+			str_append(RPL_CHAN_QUIT, client->nick, client->user,
 				client->sck.ip, channel->name, reason));
 	tmp = channel->client[i];
 	channel->client[i] = channel->client[channel->amount - 1];
 	channel->client[channel->amount - 1] = tmp;
 	channel->amount -= 1;
 	channel->client = realloc(channel->client,
-		sizeof(client_t * ) * channel->amount);
+		sizeof(client_t *) * channel->amount);
 	if (!channel->amount)
 		destroy_channel(srv, channel);
 }
@@ -51,6 +51,12 @@ void cmd_part(server_t *srv, client_t *client)
 	channel_t *tmp = srv->channel;
 	channel_t *ptr;
 
+	if (!client->logged || !client->cmd.psize) {
+		add_pending(client,
+			gen_rpl((client->logged ? ERR_PARTMOREPARAMS :
+				ERR_NOT_REGISTERED), client->nick));
+		return;
+	}
 	for (; tmp;)
 		if (!strcmp(tmp->name, client->cmd.param[0])) {
 			ptr = tmp->next;

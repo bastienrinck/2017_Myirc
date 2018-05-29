@@ -18,12 +18,15 @@ static void display_quitmsg(client_t *client)
 	if (client->cmd.psize)
 		reason = str_append(
 			"ERROR :Closing Link: %s[~%s@%s] (\"%s\")\r\n",
-			client->nick, client->user, client->sck.ip,
-			client->cmd.param[0]);
+			client->nick,
+			(client->user[0] ? client->user : "unknown"),
+			client->sck.ip, client->cmd.param[0]);
 	else
 		reason = str_append(
 			"ERROR :Closing Link: %s[~%s@%s] (\"\")\r\n",
-			client->nick, client->user, client->sck.ip);
+			client->nick,
+			(client->user[0] ? client->user : "unknown"),
+			client->sck.ip);
 	write(client->sck.fd, reason, strlen(reason));
 	free(reason);
 }

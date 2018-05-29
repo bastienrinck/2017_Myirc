@@ -8,7 +8,7 @@
 #include <string.h>
 #include "server.h"
 
-bool cli_in_channel(client_t *client, channel_t *channel)
+static bool cli_in_channel(client_t *client, channel_t *channel)
 {
 	bool res = false;
 	for (size_t i = 0; !res && i < channel->amount; ++i)
@@ -16,22 +16,24 @@ bool cli_in_channel(client_t *client, channel_t *channel)
 	return (res);
 }
 
+static void notify_chan_users(client_t *client, channel_t *tmp, char *old)
+{
+	for (size_t i = 0; i < tmp->amount; ++i) {
+		if (client != tmp->client[i])
+			add_pending(tmp->client[i],
+				str_append(RPL_NICK_NOTIFY, old, client->user,
+					client->sck.ip, client->nick));
+	}
+}
+
 static void notify_channels(server_t *srv, client_t *client, char *old)
 {
-	for (channel_t *tmp = srv->channel; tmp; tmp = tmp->next) {
-		if (cli_in_channel(client, tmp)) {
-			for (size_t i = 0; i < tmp->amount; ++i) {
-				if (client != tmp->client[i])
-					add_pending(tmp->client[i], str_append(
-						":%s!~%s@%s NICK :%s\r\n", old,
-						client->user, client->sck.ip,
-						client->nick));
-			}
-		}
-	}
+	for (channel_t *tmp = srv->channel; tmp; tmp = tmp->next)
+		if (cli_in_channel(client, tmp))
+			notify_chan_users(client, tmp, old);
 	add_pending(client,
-		str_append(":%s!~%s@%s NICK :%s\r\n", old, client->user,
-			client->sck.ip, client->nick));
+		str_append(RPL_NICK_NOTIFY, old, client->user, client->sck.ip,
+			client->nick));
 }
 
 bool nick_available(server_t *srv, client_t *client)
@@ -47,14 +49,14 @@ void cmd_nick(server_t *srv, client_t *client)
 {
 	char *msg = client->cmd.psize != 1 ? ERR_NONICKNAMEGIVEN :
 		ERR_NICKNAMEINUSE;
-	char backup[NICK_LENGTH] = {0};
+	char backup[IRC_NICK_LEN] = {0};
 
 	if (client->cmd.psize == 1) {
 		if (nick_available(srv, client)) {
 			memcpy(backup, client->nick, strlen(client->nick));
-			memset(client->nick, 0, NICK_LENGTH);
+			memset(client->nick, 0, IRC_NICK_LEN);
 			memcpy(client->nick, client->cmd.param[0],
-				strlen(client->cmd.param[0]) % NICK_LENGTH);
+				strlen(client->cmd.param[0]) % IRC_NICK_LEN);
 			if (!client->logged && client->user[0] &&
 				client->nick[0])
 				welcome_newcomer(client);

@@ -11,6 +11,10 @@
 
 void cmd_list(server_t *srv, client_t *client)
 {
+	if (!client->logged) {
+		add_pending(client, gen_rpl(ERR_NOT_REGISTERED));
+		return;
+	}
 	for (channel_t *tmp = srv->channel; tmp; tmp = tmp->next)
 		if (!client->cmd.psize || (client->cmd.psize == 1 &&
 			!strcmp(client->cmd.param[0], tmp->name))) {

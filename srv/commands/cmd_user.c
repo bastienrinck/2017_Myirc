@@ -6,8 +6,6 @@
 */
 
 #include <string.h>
-#include <stdio.h>
-#include <malloc.h>
 #include "server.h"
 
 void welcome_newcomer(client_t *client)

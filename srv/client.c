@@ -24,13 +24,13 @@ void add_pending(client_t *client, char *str)
 
 ssize_t socket_recv(client_t *client)
 {
-	char data[CMD_BUFFER];
+	char data[IRC_CMD_BUF];
 	ssize_t ret = 0;
 	int *epos = &client->cmd.rbuf.end;
 	int len = client->cmd.rbuf.size;
 	char *rbuf = client->cmd.rbuf.buffer;
 
-	ret = recv(client->sck.fd, data, CMD_BUFFER, 0);
+	ret = recv(client->sck.fd, data, IRC_CMD_BUF, 0);
 	if (ret) {
 		for (int i = 0; i < ret; ++i) {
 			rbuf[*epos] = data[i];
@@ -61,7 +61,7 @@ void inc_accept(server_t *srv)
 	client_t *client = malloc(sizeof(client_t));
 
 	memset(client, 0, sizeof(client_t));
-	client->cmd.rbuf.size = 2 * CMD_BUFFER;
+	client->cmd.rbuf.size = 2 * IRC_CMD_BUF;
 	server_accept(&srv->list->sck, &client->sck);
 	for (; tmp && tmp->next; tmp = tmp->next);
 	srv->list = (tmp) ? srv->list : client;

@@ -17,17 +17,17 @@ void clear_cmd(cmd_t *cmd)
 		free(cmd->param);
 	}
 	memset(&cmd->psize, 0, sizeof(cmd->psize));
-	memset(cmd->cmd, 0, CMD_BUFFER);
+	memset(cmd->cmd, 0, IRC_CMD_BUF);
 	cmd->param = 0;
-	memset(cmd->name, 0, MAX_CMD_LENGTH);
+	memset(cmd->name, 0, IRC_CMD_LEN);
 }
 
 static void extract_name(cmd_t *cmd, int *idx)
 {
-	memset(cmd->name, 0, MAX_CMD_LENGTH);
+	memset(cmd->name, 0, IRC_CMD_LEN);
 	while (cmd->cmd && cmd->cmd[*idx] && cmd->cmd[*idx] != ' ')
 		*idx += 1;
-	if (!*idx || *idx > MAX_CMD_LENGTH)
+	if (!*idx || *idx > IRC_CMD_LEN)
 		return;
 	memcpy(cmd->name, cmd->cmd, (size_t)*idx);
 }

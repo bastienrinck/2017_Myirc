@@ -24,6 +24,7 @@ SRCS	=	./client.c \
 		./commands/cmd_quit.c \
 		./commands/cmd_unknown.c \
 		./commands/cmd_user.c \
+		./commands/cmd_join_utils.c \
 		./parser.c \
 		./poll_handler.c \
 		./server.c	\

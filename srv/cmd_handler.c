@@ -23,7 +23,7 @@ static void extract_found_cmd(client_t *client, char *tmp, int csize)
 	memset(&tmp[csize - 1], 0, 2);
 	csize += 1;
 	for (int i = 0; i < csize; ++i) {
-		client->cmd.cmd[i % CMD_BUFFER] = tmp[i];
+		client->cmd.cmd[i % IRC_CMD_BUF] = tmp[i];
 		rbuf[(client->cmd.rbuf.start + i) % len] = 0;
 	}
 	client->cmd.rbuf.start = (client->cmd.rbuf.start + csize) % len;
@@ -37,7 +37,7 @@ static bool retrieve_cmd(client_t *client)
 	int len = client->cmd.rbuf.size;
 	int spos = client->cmd.rbuf.start;
 	char *rbuf = client->cmd.rbuf.buffer;
-	char tmp[2 * CMD_BUFFER] = {0};
+	char tmp[2 * IRC_CMD_BUF] = {0};
 
 	for (; !loop && spos != epos; spos = (spos + 1) % len) {
 		tmp[csize] = rbuf[spos];
@@ -69,11 +69,11 @@ void proceed_cmd(server_t *srv, size_t k, bool recv)
 	while (tmp && retrieve_cmd(tmp)) {
 		printf("[%s] %s\n", tmp->sck.ip, tmp->cmd.cmd);
 		parse_cmd(&tmp->cmd);
-		for (int i = 0; i < CMD_NBR; ++i)
+		for (int i = 0; i < IRC_NCMD; ++i)
 			if (!strcasecmp(fcmd[i].cmd, tmp->cmd.name)) {
 				fcmd[i].func(srv, tmp);
 				break;
-			} else if (i + 1 == CMD_NBR)
+			} else if (i + 1 == IRC_NCMD)
 				cmd_unknown(NULL, tmp);
 		clear_cmd(&tmp->cmd);
 	}

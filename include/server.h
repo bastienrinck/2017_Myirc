@@ -13,8 +13,9 @@
 
 
 //Special replies
-#define CHAN_QUIT ":%s!~%s@%s PART %s :%s\r\n"
-#define CHAN_JOIN ":%s!~%s@%s JOIN :%s\r\n"
+#define RPL_CHAN_QUIT ":%s!~%s@%s PART %s :%s\r\n"
+#define RPL_CHAN_JOIN ":%s!~%s@%s JOIN :%s\r\n"
+#define RPL_NICK_NOTIFY ":%s!~%s@%s NICK :%s\r\n"
 
 //RPL_MSG
 #define RPL_WELCOME "001 %s :Welcome to the Internet Relay Network."
@@ -29,20 +30,22 @@
 #define RPL_ENDOFMOTD "376 %s :End of MOTD command."
 
 //ERR_MSG
+#define ERR_NOT_REGISTERED "451 * :You have not registered."
 #define ERR_NOSUCHCHANNEL "403 %s :No such channel."
 #define ERR_NONICKNAMEGIVEN "431 %s :No nickname given."
 #define ERR_NICKNAMEINUSE "433 %s :Nickname already reserved."
 #define ERR_NEEDMOREPARAMS "461 %s :Invalid parameters."
+#define ERR_PARTMOREPARAMS "461 %s PART :Invalid parameters."
 #define ERR_ALREADYREGISTERED "462 %s :Already registered."
 
-#define NICK_LENGTH 100
-#define CMD_BUFFER 512
-#define MAX_CMD_LENGTH 12
-#define CHANNEL_LENGTH 200
-#define CMD_NBR 10
+#define IRC_NICK_LEN 100
+#define IRC_CMD_BUF 512
+#define IRC_CMD_LEN 12
+#define IRC_CHANNEL_LEN 200
+#define IRC_NCMD 10
 
 typedef struct ring_buffer_s {
-	char buffer[2 * CMD_BUFFER];
+	char buffer[2 * IRC_CMD_BUF];
 	int start;
 	int end;
 	int size;
@@ -55,8 +58,8 @@ typedef struct pending_s {
 
 typedef struct cmd_s {
 	ring_buffer_t rbuf;
-	char cmd[CMD_BUFFER];
-	char name[MAX_CMD_LENGTH];
+	char cmd[IRC_CMD_BUF];
+	char name[IRC_CMD_LEN];
 	char **param;
 	int psize;
 } cmd_t;
@@ -66,8 +69,8 @@ typedef struct client_s {
 	char pass[512];
 	char user[512];
 	char username[512];
-	char nick[NICK_LENGTH];
-	char buffer[CMD_BUFFER];
+	char nick[IRC_NICK_LEN];
+	char buffer[IRC_CMD_BUF];
 	cmd_t cmd;
 	pending_t *pending;
 	bool logged;
@@ -76,7 +79,7 @@ typedef struct client_s {
 } client_t;
 
 typedef struct channel_s {
-	char name[CHANNEL_LENGTH];
+	char name[IRC_CHANNEL_LEN];
 	char topic[512];
 	client_t **client;
 	size_t amount;
@@ -123,5 +126,9 @@ void cmd_quit(server_t *, client_t *);
 void cmd_ping(server_t *, client_t *);
 
 //Command's tools
-void welcome_newcomer(client_t *);
 char *str_append(const char *, ...);
+void welcome_newcomer(client_t *);
+void notify_channel(channel_t *, client_t *);
+void send_topic(channel_t *, client_t *);
+void join_existing_channel(client_t *, channel_t *);
+void join_new_channel(server_t *, client_t *, char *);
