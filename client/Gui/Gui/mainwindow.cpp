@@ -128,6 +128,7 @@ void MainWindow::funcFile()
 
 void MainWindow::funcQuit()
 {
+    _socket.write("/QUIT");
     ui->textEdit->append("Disconnect from 127.0.0.1:4242");
     _socket.close();
     exit(0);
