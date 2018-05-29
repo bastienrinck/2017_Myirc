@@ -9,17 +9,14 @@
 
 #include "socket.h"
 
-#define NICK_LENGTH 100
-#define CMD_BUFFER 512
-#define MAX_CMD_LENGTH 12
-#define CHANNEL_LENGTH 200
-#define CMD_NBR 10
-
 #define TRANSLATE_NICK(cli) (((cli)->nick[0] ? (cli)->nick : "*"))
 
-/*
- * RPL_MSG
- */
+
+//Special replies
+#define CHAN_QUIT ":%s!~%s@%s PART %s :%s\r\n"
+#define CHAN_JOIN ":%s!~%s@%s JOIN :%s\r\n"
+
+//RPL_MSG
 #define RPL_WELCOME "001 %s :Welcome to the Internet Relay Network."
 #define RPL_AUTH "020 %s :Please authenticate."
 #define RPL_LIST "322 %s %s %d :%s"
@@ -31,14 +28,18 @@
 #define RPL_MOTDSTART "375 %s :Server's Message of the day:"
 #define RPL_ENDOFMOTD "376 %s :End of MOTD command."
 
-/*
- * ERR_MSG
- */
+//ERR_MSG
 #define ERR_NOSUCHCHANNEL "403 %s :No such channel."
 #define ERR_NONICKNAMEGIVEN "431 %s :No nickname given."
 #define ERR_NICKNAMEINUSE "433 %s :Nickname already reserved."
 #define ERR_NEEDMOREPARAMS "461 %s :Invalid parameters."
 #define ERR_ALREADYREGISTERED "462 %s :Already registered."
+
+#define NICK_LENGTH 100
+#define CMD_BUFFER 512
+#define MAX_CMD_LENGTH 12
+#define CHANNEL_LENGTH 200
+#define CMD_NBR 10
 
 typedef struct ring_buffer_s {
 	char buffer[2 * CMD_BUFFER];
@@ -108,26 +109,19 @@ void list_users(client_t *, channel_t *);
 ssize_t socket_recv(client_t *);
 ssize_t socket_send(client_t *);
 
-/*
- * commands
- */
+//commands
 void cmd_join(server_t *, client_t *);
 void cmd_list(server_t *, client_t *);
 void cmd_privmsg(server_t *, client_t *);
-void cmd_msg_faccept(server_t *, client_t *);
-void cmd_msg_fsend(server_t *, client_t *);
 void cmd_names(server_t *, client_t *);
 void cmd_nick(server_t *, client_t *);
 void cmd_part(server_t *, client_t *);
-void cmd_server(server_t *, client_t *);
 void cmd_user(server_t *, client_t *);
 void cmd_pass(server_t *, client_t *);
 void cmd_unknown(server_t *, client_t *);
 void cmd_quit(server_t *, client_t *);
 void cmd_ping(server_t *, client_t *);
 
-/*
- * Command's tools
- */
+//Command's tools
 void welcome_newcomer(client_t *);
 char *str_append(const char *, ...);

@@ -1,28 +1,33 @@
-NAME	= program
+##
+## EPITECH PROJECT, 2018
+## irc
+## File description:
+## Makefile
+##
 
-CC	= 
+NAME	= irc
+
+SRV	= server
+
+CLI	= client
 
 RM	= rm -f
 
-SRCS	= 
-
-OBJS	= $(SRCS:=.o)
-
-CFLAGS = -I 
-CFLAGS += -W -Wall -Wextra
-
 all: $(NAME)
-
-$(NAME):
-	$(MAKE) -C srv && mv srv/server .
 
 server:
 	$(MAKE) -C srv && mv srv/server .
+
+client:
+	echo "client pas encore fait"
+
+$(NAME): server client
+
 clean:
-	$(RM) $(OBJS)
+	$(MAKE) -C srv clean
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(SRV)
 
 re: fclean all
 

@@ -5,10 +5,6 @@
 ** Created by rectoria
 */
 
-#define _GNU_SOURCE
-
-//TODO A la compile : -D_GNU_SOURCE
-
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>

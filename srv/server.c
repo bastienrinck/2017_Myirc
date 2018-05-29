@@ -26,9 +26,7 @@ static bool myirc_server(uint16_t port)
 	if (!init_srv(&client->sck, port))
 		return (false);
 	printf("[%s] Listening on port %d\n", client->sck.ip, client->sck.port);
-	while (1)
-		proceed_poll(&srv, client);
-	//free_client();
+	while (proceed_poll(&srv, client));
 	return (true);
 }
 
@@ -46,4 +44,5 @@ int main(int ac, char **av)
 		ret = print_usage(av[0]);
 	else if (!myirc_server((uint16_t)strtol(av[1], NULL, 10)))
 		ret = 84;
+	return (ret);
 }

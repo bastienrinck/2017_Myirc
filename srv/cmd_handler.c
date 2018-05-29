@@ -15,7 +15,21 @@ static ptrfct_tuple_t fcmd[] = {{"PASS", &cmd_pass}, {"NICK", &cmd_nick},
 	{"PART", &cmd_part}, {"QUIT", &cmd_quit}, {"NAMES", &cmd_names},
 	{"PRIVMSG", &cmd_privmsg}, {"PING", &cmd_ping}};
 
-bool retrieve_cmd(client_t *client)
+static void extract_finded_cmd(client_t *client, char *tmp, int csize)
+{
+	int len = client->cmd.rbuf.size;
+	char *rbuf = client->cmd.rbuf.buffer;
+
+	memset(&tmp[csize - 1], 0, 2);
+	csize += 1;
+	for (int i = 0; i < csize; ++i) {
+		client->cmd.cmd[i % CMD_BUFFER] = tmp[i];
+		rbuf[(client->cmd.rbuf.start + i) % len] = 0;
+	}
+	client->cmd.rbuf.start = (client->cmd.rbuf.start + csize) % len;
+}
+
+static bool retrieve_cmd(client_t *client)
 {
 	bool loop = false;
 	int csize = 0;
@@ -30,15 +44,8 @@ bool retrieve_cmd(client_t *client)
 		csize += 1;
 		loop = (rbuf[spos] == '\r' && rbuf[(spos + 1) % len] == '\n');
 	}
-	if (loop) {
-		memset(&tmp[csize - 1], 0, 2);
-		csize += 1;
-		for (int i = 0; i < csize; ++i) {
-			client->cmd.cmd[i % CMD_BUFFER] = tmp[i];
-			rbuf[(client->cmd.rbuf.start + i) % len] = 0;
-		}
-		client->cmd.rbuf.start = (client->cmd.rbuf.start + csize) % len;
-	}
+	if (loop)
+		extract_finded_cmd(client, tmp, csize);
 	return (loop);
 }
 

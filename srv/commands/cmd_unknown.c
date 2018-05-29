@@ -10,6 +10,7 @@
 
 void cmd_unknown(server_t *srv, client_t *client)
 {
+	(void)srv;
 
 	printf("Unknown %s command\n", client->cmd.name);
 }

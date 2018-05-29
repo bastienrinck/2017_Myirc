@@ -10,7 +10,7 @@
 #include <poll.h>
 #include "server.h"
 
-size_t client_linkedllen(client_t *client)
+static size_t client_linkedllen(client_t *client)
 {
 	size_t size = (size_t)(client != 0);
 
@@ -19,7 +19,7 @@ size_t client_linkedllen(client_t *client)
 	return (size);
 }
 
-void *build_pollfd(server_t *srv)
+static void build_pollfd(server_t *srv)
 {
 	srv->size = client_linkedllen(srv->list);
 	client_t *tmp = srv->list;
@@ -27,12 +27,13 @@ void *build_pollfd(server_t *srv)
 	srv->pollfd = calloc(srv->size, sizeof(struct pollfd));
 	for (size_t i = 0; i < srv->size; ++i) {
 		srv->pollfd[i].fd = tmp->sck.fd;
-		srv->pollfd[i].events = (short)(tmp->pending ? (POLLIN | POLLOUT) : POLLIN);
+		srv->pollfd[i].events = (short)(tmp->pending ?
+			(POLLIN | POLLOUT) : POLLIN);
 		tmp = tmp->next;
 	}
 }
 
-void apply_revent(server_t *srv)
+static void apply_revent(server_t *srv)
 {
 	for (size_t k = 0; k < srv->size; ++k) {
 		if (!k && srv->pollfd[k].revents & POLLIN) {
@@ -52,4 +53,5 @@ bool proceed_poll(server_t *srv, client_t *client)
 	srv->nevent = poll(srv->pollfd, srv->size, -1);
 	apply_revent(srv);
 	free(srv->pollfd);
+	return (true);
 }

@@ -1,32 +1,36 @@
+##
+## EPITECH PROJECT, 2018
+## irc
+## File description:
+## Makefile
+##
+
 NAME	= server
 
 CC	= gcc -g -D_GNU_SOURCE
 
 RM	= rm -f
 
-SRCS	= ./client.c \
-	  ./cmd_handler.c \
-	  ./commands/cmd_join.c \
-	  ./commands/cmd_list.c \
-	  ./commands/cmd_msg_faccept.c \
-	  ./commands/cmd_msg_fsend.c \
-	  ./commands/cmd_names.c \
-	  ./commands/cmd_nick.c \
-	  ./commands/cmd_part.c \
-	  ./commands/cmd_pass.c \
-	  ./commands/cmd_ping.c \
-	  ./commands/cmd_privmsg.c \
-	  ./commands/cmd_quit.c \
-	  ./commands/cmd_server.c \
-	  ./commands/cmd_unknown.c \
-	  ./commands/cmd_user.c \
-	  ./parser.c \
-	  ./poll_handler.c \
-	  ./server.c	\
-	  ../shared/client_socket.c \
-	  ../shared/server_socket.c \
-	  ../shared/socket.c \
-	  ../shared/tools.c
+SRCS	=	./client.c \
+		./cmd_handler.c \
+		./commands/cmd_join.c \
+		./commands/cmd_list.c \
+		./commands/cmd_names.c \
+		./commands/cmd_nick.c \
+		./commands/cmd_part.c \
+		./commands/cmd_pass.c \
+		./commands/cmd_ping.c \
+		./commands/cmd_privmsg.c \
+		./commands/cmd_quit.c \
+		./commands/cmd_unknown.c \
+		./commands/cmd_user.c \
+		./parser.c \
+		./poll_handler.c \
+		./server.c	\
+		../shared/client_socket.c \
+		../shared/server_socket.c \
+		../shared/socket.c \
+		../shared/tools.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -36,7 +40,7 @@ CFLAGS += -W -Wall -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJS)

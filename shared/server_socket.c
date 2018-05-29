@@ -62,6 +62,5 @@ bool server_accept(socket_t *sck, socket_t *client)
 	temp = inet_ntoa(((struct sockaddr_in *)&client->s_in)->sin_addr);
 	memset(client->ip, 0, INET_ADDRSTRLEN);
 	memcpy(client->ip, temp, INET_ADDRSTRLEN);
-	if (!VALID_SOCKET(client->fd))
-		return (VALID_SOCKET(client->fd));
+	return (VALID_SOCKET(client->fd));
 }
