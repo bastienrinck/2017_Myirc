@@ -15,7 +15,7 @@ static ptrfct_tuple_t fcmd[] = {{"PASS", &cmd_pass}, {"NICK", &cmd_nick},
 	{"PART", &cmd_part}, {"QUIT", &cmd_quit}, {"NAMES", &cmd_names},
 	{"PRIVMSG", &cmd_privmsg}, {"PING", &cmd_ping}};
 
-static void extract_finded_cmd(client_t *client, char *tmp, int csize)
+static void extract_found_cmd(client_t *client, char *tmp, int csize)
 {
 	int len = client->cmd.rbuf.size;
 	char *rbuf = client->cmd.rbuf.buffer;
@@ -45,7 +45,7 @@ static bool retrieve_cmd(client_t *client)
 		loop = (rbuf[spos] == '\r' && rbuf[(spos + 1) % len] == '\n');
 	}
 	if (loop)
-		extract_finded_cmd(client, tmp, csize);
+		extract_found_cmd(client, tmp, csize);
 	return (loop);
 }
 
