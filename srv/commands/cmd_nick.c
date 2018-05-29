@@ -11,7 +11,7 @@
 bool cli_in_channel(client_t *client, channel_t *channel)
 {
 	bool res = false;
-	for (int i = 0; !res && i < channel->amount; ++i)
+	for (size_t i = 0; !res && i < channel->amount; ++i)
 		res = client == channel->client[i];
 	return (res);
 }
@@ -20,7 +20,7 @@ static void notify_channels(server_t *srv, client_t *client, char *old)
 {
 	for (channel_t *tmp = srv->channel; tmp; tmp = tmp->next) {
 		if (cli_in_channel(client, tmp)) {
-			for (int i = 0; i < tmp->amount; ++i) {
+			for (size_t i = 0; i < tmp->amount; ++i) {
 				if (client != tmp->client[i])
 					add_pending(tmp->client[i], str_append(
 						":%s!~%s@%s NICK :%s\r\n", old,
@@ -64,5 +64,4 @@ void cmd_nick(server_t *srv, client_t *client)
 		}
 	}
 	add_pending(client, gen_rpl(msg, TRANSLATE_NICK(client)));
-	//TODO NICK propag et valid
 }

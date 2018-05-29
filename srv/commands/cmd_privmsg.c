@@ -24,7 +24,6 @@ void msg_user(server_t *srv, client_t *client)
 
 void msg_channel(server_t *srv, client_t *client)
 {
-	char *str;
 	channel_t *tmp = srv->channel;
 
 	for (; tmp &&

@@ -5,8 +5,6 @@
 ** Created by rectoria
 */
 
-#define _GNU_SOURCE
-
 #include <string.h>
 #include <malloc.h>
 #include "server.h"

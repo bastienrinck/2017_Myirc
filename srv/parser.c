@@ -68,6 +68,6 @@ void parse_cmd(cmd_t *cmd)
 
 	extract_name(cmd, &idx);
 	extract_params(cmd, &idx, idx);
-	for (size_t i = 0; i < cmd->psize; ++i)
-		printf("[%zu] %s\n", i, cmd->param[i]);
+	for (int i = 0; i < cmd->psize; ++i)
+		printf("[%d] %s\n", i, cmd->param[i]);
 }

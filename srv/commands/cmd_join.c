@@ -9,21 +9,21 @@
 #include <string.h>
 #include "server.h"
 
-void notify_channel(channel_t *channel, client_t *client)
+static void notify_channel(channel_t *channel, client_t *client)
 {
 	for (size_t i = 0; i < channel->amount; ++i)
 		add_pending(channel->client[i],
-			str_append(":%s!~%s@%s JOIN :%s\r\n", client->nick,
+			str_append(CHAN_JOIN, client->nick,
 				client->user, client->sck.ip, channel->name));
 }
 
-void send_topic(channel_t *channel, client_t *client)
+static void send_topic(channel_t *channel, client_t *client)
 {
 	add_pending(client, gen_rpl(RPL_TOPIC, client->user, channel->name,
 		channel->topic));
 }
 
-void join_new_channel(server_t *srv, client_t *client, char *name)
+static void join_new_channel(server_t *srv, client_t *client, char *name)
 {
 	channel_t *ptr;
 	channel_t *tmp = srv->channel;
@@ -46,7 +46,7 @@ void join_new_channel(server_t *srv, client_t *client, char *name)
 	list_users(client, ptr);
 }
 
-void join_existing_channel(client_t *client, channel_t *channel)
+static void join_existing_channel(client_t *client, channel_t *channel)
 {
 	channel->client = realloc(channel->client,
 		sizeof(client_t *) * (channel->amount + 1));
@@ -57,7 +57,7 @@ void join_existing_channel(client_t *client, channel_t *channel)
 	list_users(client, channel);
 }
 
-void join_channel(server_t *srv, client_t *client, char *name)
+static void join_channel(server_t *srv, client_t *client, char *name)
 {
 	channel_t *tmp = srv->channel;
 

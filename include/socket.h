@@ -21,28 +21,21 @@ typedef struct socket_s {
 	struct sockaddr s_in;
 } socket_t;
 
-/*
- * client_socket.c
- */
+
+//client_socket.c
 bool create_client_socket(socket_t *);
 bool client_connect(socket_t *);
 
-/*
- * server_socket.c
- */
+//server_socket.c
 bool create_server_socket(socket_t *sck);
 bool server_accept(socket_t *, socket_t *);
 bool bind_socket(int, struct sockaddr *, socklen_t);
 bool listen_socket(int, int);
 
-/*
- * socket.c
- */
+//socket.c
 void free_socket(socket_t *);
 bool create_tcp_socket(int *, int);
 
-/*
- * tools.c
- */
+//tools.c
 bool print_errno(const char *, int, const char *);
 char *gen_rpl(const char *, ...);
