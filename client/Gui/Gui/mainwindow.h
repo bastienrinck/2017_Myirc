@@ -5,7 +5,6 @@
 #include <functional>
 #include <QMainWindow>
 #include <QDebug>
-#include <QVector>
 
 namespace Ui {
 class MainWindow;
