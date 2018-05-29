@@ -28,7 +28,6 @@ bool Ui::socketManager::isConnect()
 void Ui::socketManager::close()
 {
     shutdown(_sock, 0);
-    //::close(_sock);
     _sock = -1;
 }
 
