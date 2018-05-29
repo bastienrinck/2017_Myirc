@@ -45,7 +45,7 @@ static bool retrieve_cmd(client_t *client)
 		loop = (rbuf[spos] == '\r' && rbuf[(spos + 1) % len] == '\n');
 	}
 	if (loop)
-		extract_finded_cmd(client, tmp, csize);
+		extract_found_cmd(client, tmp, csize);
 	return (loop);
 }
 
