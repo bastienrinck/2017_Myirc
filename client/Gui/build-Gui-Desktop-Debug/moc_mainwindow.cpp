@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -41,6 +41,11 @@ static const uint qt_meta_data_MainWindow[] = {
      109,   11,   11,   11, 0x08,
      121,   11,   11,   11, 0x08,
      131,   11,   11,   11, 0x08,
+     142,   11,   11,   11, 0x08,
+     153,   11,   11,   11, 0x08,
+     174,  168,  164,   11, 0x08,
+     213,  205,  197,   11, 0x08,
+     241,  237,   11,   11, 0x08,
 
        0        // eod
 };
@@ -50,6 +55,10 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "funcConnect()\0funcQuit()\0funcJoin()\0"
     "funcNick()\0funcUsers()\0funcPart()\0"
     "funcNames()\0funcMsg()\0funcFile()\0"
+    "funcUser()\0funcList()\0int\0c,str\0"
+    "findPos(char,QString&)\0QString\0pos,str\0"
+    "cutString(int,QString&)\0str\0"
+    "printUsers(QString&)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -69,10 +78,16 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->funcNames(); break;
         case 9: _t->funcMsg(); break;
         case 10: _t->funcFile(); break;
+        case 11: _t->funcUser(); break;
+        case 12: _t->funcList(); break;
+        case 13: { int _r = _t->findPos((*reinterpret_cast< char(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 14: { QString _r = _t->cutString((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 15: _t->printUsers((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData MainWindow::staticMetaObjectExtraData = {
@@ -107,9 +122,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 16;
     }
     return _id;
 }

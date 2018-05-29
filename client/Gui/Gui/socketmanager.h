@@ -20,18 +20,19 @@ namespace Ui {
     public:
         socketManager();
         ~socketManager();
+        bool isConnect();
         bool create();
         bool connect();
         bool create_tcp_socket();
         bool printError(const char *fname, const int line, const char *filename);
         bool write(const char *str);
         void close();
-        QString read();
+        QString read(bool state);
 
     private:
-        struct pollfd _fds[1];
+        struct pollfd fds[1];
         int _sock;
-        socklen_t _size;
+        bool _connect;
         uint16_t _port = 4242;
         char _ip[INET_ADDRSTRLEN];
         struct sockaddr_in _s_in;
