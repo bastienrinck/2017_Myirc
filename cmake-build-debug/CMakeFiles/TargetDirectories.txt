@@ -1,4 +1,0 @@
-/home/Jonathan/tek2/MyIRC/PSU_myirc_2017/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/Jonathan/tek2/MyIRC/PSU_myirc_2017/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/Jonathan/tek2/MyIRC/PSU_myirc_2017/cmake-build-debug/CMakeFiles/test_ui.dir
-/home/Jonathan/tek2/MyIRC/PSU_myirc_2017/cmake-build-debug/CMakeFiles/client.dir

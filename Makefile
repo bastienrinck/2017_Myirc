@@ -21,11 +21,11 @@ server:
 	$(MAKE) -C srv && mv srv/server .
 
 client:
-	$(MAKE) -C cli/Gui && mv cli/Gui/Gui ./$(CLI)
+	$(MAKE) -C cli && mv cli/Gui ./$(CLI)
 
 clean:
 	$(MAKE) -C srv clean
-	$(MAKE) -C cli/Gui clean
+	$(MAKE) -C cli clean
 
 fclean: clean
 	$(RM) $(SRV) $(CLI)

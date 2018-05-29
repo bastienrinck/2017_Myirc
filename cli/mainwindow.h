@@ -5,7 +5,6 @@
 #include <functional>
 #include <QMainWindow>
 #include <QDebug>
-#include <QVector>
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +32,9 @@ private slots:
      void funcFile();
      void funcUser();
      void funcList();
+     int findPos(char c, QString &str);
+     QString cutString(int pos, QString &str);
+     void printUsers(QString &str);
 
 private:
 
