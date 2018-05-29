@@ -9,7 +9,7 @@
 
 #include "socket.h"
 
-#define NICK_LENGTH 9
+#define NICK_LENGTH 100
 #define CMD_BUFFER 512
 #define MAX_CMD_LENGTH 12
 #define CHANNEL_LENGTH 200
@@ -40,12 +40,20 @@
 #define ERR_NEEDMOREPARAMS "461 %s :Invalid parameters."
 #define ERR_ALREADYREGISTERED "462 %s :Already registered."
 
+typedef struct ring_buffer_s {
+	char buffer[2 * CMD_BUFFER];
+	int start;
+	int end;
+	int size;
+} ring_buffer_t;
+
 typedef struct pending_s {
 	char *res;
 	struct pending_s *next;
 } pending_t;
 
 typedef struct cmd_s {
+	ring_buffer_t rbuf;
 	char cmd[CMD_BUFFER];
 	char name[MAX_CMD_LENGTH];
 	char **param;
@@ -58,6 +66,7 @@ typedef struct client_s {
 	char user[512];
 	char username[512];
 	char nick[NICK_LENGTH];
+	char buffer[CMD_BUFFER];
 	cmd_t cmd;
 	pending_t *pending;
 	bool logged;
@@ -90,7 +99,7 @@ typedef struct ptrfct_tuple_s {
 bool proceed_poll(server_t *, client_t *);
 void inc_accept(server_t *);
 void parse_cmd(cmd_t *);
-void proceed_cmd(server_t *, size_t);
+void proceed_cmd(server_t *, size_t, bool);
 void send_cmd(server_t *, size_t);
 void clear_cmd(cmd_t *);
 void add_pending(client_t *, char *);
