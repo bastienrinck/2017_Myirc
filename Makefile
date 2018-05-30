@@ -15,7 +15,7 @@ RM	= rm -f
 
 all: $(NAME)
 
-$(NAME): client server
+$(NAME): server client
 
 server:
 	$(MAKE) -C srv && mv srv/server .

@@ -7,7 +7,7 @@
 
 NAME	= server
 
-CC	= gcc -g -D_GNU_SOURCE
+CC	= gcc -D_GNU_SOURCE
 
 RM	= rm -f
 
