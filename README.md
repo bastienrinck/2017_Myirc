@@ -44,7 +44,7 @@ $> ./client         # IRC client
 > /msg <#channel / nickname> <msg>
 ```
 
-## Credits
+## Authors
 
 * Bastien Rinck
 * Jonathan Frickert
