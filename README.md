@@ -11,35 +11,35 @@ $> ./client         # IRC client
 ```
 ## Client - command list:
 
-**connect to a server**
+**Connect to a server**
 ```
 > /server <ip>:<port>
 ```
-**set a nickname**
+**Set a nickname**
 ```
 > /nick <new nickname>
 ```
-**channel list with users**
+**Channel list with users**
 ```
 > /list
 ```
-**join an irc channel**
+**Join an irc channel**
 ```
 > /join <#channel>
 ```
-**leave an irc channel or the current one**
+**Leave an irc channel or the current one**
 ```
 > /part [#channel]
 ```
-**list the connected users**
+**List the connected users**
 ```
 > /users
 ```
-**list users in a channel or the current one**
+**List users in a channel or the current one**
 ```
 > /names [#channel]
 ```
-**send a message to a channel or a user**
+**Send a message to a channel or a user**
 ```
 > /msg <#channel / nickname> <msg>
 ```
