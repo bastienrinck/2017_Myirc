@@ -1,4 +1,4 @@
-# 2017è_Myirc
+# 2017_Myirc
 
 IRC client/server
 
