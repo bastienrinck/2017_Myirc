@@ -1,5 +1,6 @@
-# PSU_myirc_2017
+# 2017è_Myirc
 
+IRC client/server
 
 ## Usage
 
