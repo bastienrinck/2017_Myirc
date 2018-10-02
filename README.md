@@ -1,6 +1,5 @@
 # PSU_myirc_2017
 
-**Subject [here](https://github.com/thibautcornolti/MyIRC/blob/master/Subject.pdf)**
 
 ## Usage
 
